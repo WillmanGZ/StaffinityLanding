@@ -1,0 +1,94 @@
+---
+interface SolutionCard {
+  icon: string;
+  title: string;
+  description: string;
+  features: string[];
+}
+
+interface Props {
+  sectionTitle?: string;
+  sectionSubtitle?: string;
+  solutions?: SolutionCard[];
+}
+
+const {
+  sectionTitle = "Nuestras Soluciones",
+  sectionSubtitle = "Módulos integrados para una gestión completa de tu capital humano",
+  solutions = [
+    {
+      icon: "👥",
+      title: "Módulo de Personal",
+      description:
+        "Gestiona todo el ciclo de vida del empleado desde un solo lugar con herramientas potentes y fáciles de usar.",
+      features: [
+        "Gestión completa de empleados y perfiles",
+        "Solicitudes de vacaciones con flujo de aprobación",
+        "Sistema de notificaciones en tiempo real",
+        "Reportes y analíticas de RRHH",
+      ],
+    },
+    {
+      icon: "🎯",
+      title: "Módulo de Reclutamiento",
+      description:
+        "Optimiza tu proceso de selección con seguimiento completo de candidatos y vacantes activas.",
+      features: [
+        "Publicación y gestión de vacantes",
+        "Base de datos de candidatos",
+        "Seguimiento de entrevistas y evaluaciones",
+        "Búsqueda de talento interno",
+      ],
+    },
+    {
+      icon: "🔗",
+      title: "Integración Continua",
+      description:
+        "Arquitectura de microservicios que permite comunicación fluida entre todos los módulos del sistema.",
+      features: [
+        "API RESTful escalable y segura",
+        "Sincronización automática de datos",
+        "Arquitectura hexagonal modular",
+        "Despliegue continuo (CI/CD)",
+      ],
+    },
+    {
+      icon: "📊",
+      title: "Reportes y Analíticas",
+      description:
+        "Toma decisiones basadas en datos con dashboards interactivos y reportes personalizables.",
+      features: [
+        "KPIs de recursos humanos en tiempo real",
+        "Análisis de vacantes y contrataciones",
+        "Métricas de solicitudes y aprobaciones",
+        "Exportación de datos a múltiples formatos",
+      ],
+    },
+  ],
+} = Astro.props;
+---
+
+<section id="soluciones" class="solutions">
+  <div class="content-container">
+    <div class="section-title">
+      <h2>{sectionTitle}</h2>
+      <p>{sectionSubtitle}</p>
+    </div>
+    <div class="solutions-grid">
+      {
+        solutions.map((solution) => (
+          <div class="solution-card">
+            <div class="solution-icon">{solution.icon}</div>
+            <h3>{solution.title}</h3>
+            <p>{solution.description}</p>
+            <ul class="solution-features">
+              {solution.features.map((feature) => (
+                <li>{feature}</li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,91 @@
+---
+interface SocialLink {
+  href: string;
+  label: string;
+}
+
+interface FooterLinkGroup {
+  title: string;
+  links: { href: string; label: string }[];
+}
+
+interface Props {
+  brandName?: string;
+  brandDescription?: string;
+  socialLinks?: SocialLink[];
+  linkGroups?: FooterLinkGroup[];
+  copyright?: string;
+}
+
+const {
+  brandName = "HexaLink",
+  brandDescription = "Plataforma integral de gestión de capital humano. Transformamos la manera en que las empresas gestionan su talento con tecnología moderna y eficiente.",
+  socialLinks = [
+    { href: "#", label: "Li" },
+    { href: "#", label: "Tw" },
+    { href: "#", label: "Fb" },
+    { href: "#", label: "Ig" },
+  ],
+  linkGroups = [
+    {
+      title: "Soluciones",
+      links: [
+        { href: "#soluciones", label: "Módulo Personal" },
+        { href: "#soluciones", label: "Reclutamiento" },
+        { href: "#soluciones", label: "Analíticas" },
+        { href: "#soluciones", label: "Integraciones" },
+      ],
+    },
+    {
+      title: "Empresa",
+      links: [
+        { href: "#nosotros", label: "Nosotros" },
+        { href: "#vacantes", label: "Carreras" },
+        { href: "#contacto", label: "Contacto" },
+        { href: "#", label: "Blog" },
+      ],
+    },
+    {
+      title: "Legal",
+      links: [
+        { href: "#", label: "Términos de Uso" },
+        { href: "#", label: "Privacidad" },
+        { href: "#", label: "Cookies" },
+        { href: "#", label: "Licencias" },
+      ],
+    },
+  ],
+  copyright = "© 2024 HexaLink. Todos los derechos reservados.",
+} = Astro.props;
+---
+
+<footer>
+  <div class="footer-content">
+    <div class="footer-about">
+      <h3>{brandName}</h3>
+      <p>{brandDescription}</p>
+      <div class="social-links">
+        {
+          socialLinks.map((link) => (
+            <a href={link.href} class="social-link">
+              {link.label}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+    {
+      linkGroups.map((group) => (
+        <div class="footer-links">
+          <h4>{group.title}</h4>
+          {group.links.map((link) => (
+            <a href={link.href}>{link.label}</a>
+          ))}
+        </div>
+      ))
+    }
+  </div>
+  <div class="footer-bottom">
+    <p>{copyright}</p>
+  </div>
+</footer>

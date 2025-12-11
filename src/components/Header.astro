@@ -1,0 +1,39 @@
+---
+interface NavLink {
+  href: string;
+  label: string;
+  isCta?: boolean;
+}
+
+interface Props {
+  logo?: string;
+  navLinks?: NavLink[];
+}
+
+const {
+  logo = "HexaLink",
+  navLinks = [
+    { href: "#inicio", label: "Inicio" },
+    { href: "#nosotros", label: "Nosotros" },
+    { href: "#soluciones", label: "Soluciones" },
+    { href: "#vacantes", label: "Vacantes" },
+    { href: "#contacto", label: "Contacto" },
+    { href: "#vacantes", label: "Ver Ofertas", isCta: true },
+  ],
+} = Astro.props;
+---
+
+<header>
+  <nav>
+    <div class="logo">{logo}</div>
+    <div class="nav-links">
+      {
+        navLinks.map((link) => (
+          <a href={link.href} class={link.isCta ? "cta-nav" : ""}>
+            {link.label}
+          </a>
+        ))
+      }
+    </div>
+  </nav>
+</header>
