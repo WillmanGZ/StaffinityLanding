@@ -13,11 +13,11 @@ interface Props {
 const {
   logo = "HexaLink",
   navLinks = [
-    { href: "#inicio", label: "Inicio" },
-    { href: "#nosotros", label: "Nosotros" },
-    { href: "#soluciones", label: "Soluciones" },
-    { href: "#contacto", label: "Contacto" },
-    { href: "#vacantes", label: "Ver Ofertas", isCta: true },
+    { href: "#home", label: "Home" },
+    { href: "#about", label: "About" },
+    { href: "#solutions", label: "Solutions" },
+    { href: "#contact", label: "Contact" },
+    { href: "#contact", label: "Get Started", isCta: true },
   ],
 } = Astro.props;
 ---
@@ -40,7 +40,7 @@ const {
     <!-- Mobile Menu Button -->
     <button
       class="mobile-menu-btn"
-      aria-label="Abrir menú"
+      aria-label="Open menu"
       aria-expanded="false"
     >
       <span class="hamburger-line"></span>

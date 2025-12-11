@@ -13,62 +13,62 @@ interface Props {
 }
 
 const {
-  sectionTitle = "Nuestras Soluciones",
-  sectionSubtitle = "Módulos integrados para una gestión completa de tu capital humano",
+  sectionTitle = "Our Solutions",
+  sectionSubtitle = "Integrated modules for complete human capital management",
   solutions = [
     {
       icon: "👥",
-      title: "Módulo de Personal",
+      title: "Personnel Module",
       description:
-        "Gestiona todo el ciclo de vida del empleado desde un solo lugar con herramientas potentes y fáciles de usar.",
+        "Manage the entire employee lifecycle from a single place with powerful and easy-to-use tools.",
       features: [
-        "Gestión completa de empleados y perfiles",
-        "Solicitudes de vacaciones con flujo de aprobación",
-        "Sistema de notificaciones en tiempo real",
-        "Reportes y analíticas de RRHH",
+        "Complete employee and profile management",
+        "Time off requests with approval workflow",
+        "Real-time notification system",
+        "HR reports and analytics",
       ],
     },
     {
       icon: "🎯",
-      title: "Módulo de Reclutamiento",
+      title: "Recruitment Module",
       description:
-        "Optimiza tu proceso de selección con seguimiento completo de candidatos y vacantes activas.",
+        "Optimize your selection process with complete candidate and job opening tracking.",
       features: [
-        "Publicación y gestión de vacantes",
-        "Base de datos de candidatos",
-        "Seguimiento de entrevistas y evaluaciones",
-        "Búsqueda de talento interno",
+        "Job posting and management",
+        "Candidate database",
+        "Interview and evaluation tracking",
+        "Internal talent search",
       ],
     },
     {
       icon: "🔗",
-      title: "Integración Continua",
+      title: "Continuous Integration",
       description:
-        "Arquitectura de microservicios que permite comunicación fluida entre todos los módulos del sistema.",
+        "Microservices architecture enabling seamless communication between all system modules.",
       features: [
-        "API RESTful escalable y segura",
-        "Sincronización automática de datos",
-        "Arquitectura hexagonal modular",
-        "Despliegue continuo (CI/CD)",
+        "Scalable and secure RESTful API",
+        "Automatic data synchronization",
+        "Modular hexagonal architecture",
+        "Continuous deployment (CI/CD)",
       ],
     },
     {
       icon: "📊",
-      title: "Reportes y Analíticas",
+      title: "Reports & Analytics",
       description:
-        "Toma decisiones basadas en datos con dashboards interactivos y reportes personalizables.",
+        "Make data-driven decisions with interactive dashboards and customizable reports.",
       features: [
-        "KPIs de recursos humanos en tiempo real",
-        "Análisis de vacantes y contrataciones",
-        "Métricas de solicitudes y aprobaciones",
-        "Exportación de datos a múltiples formatos",
+        "Real-time HR KPIs",
+        "Job openings and hiring analysis",
+        "Request and approval metrics",
+        "Multi-format data export",
       ],
     },
   ],
 } = Astro.props;
 ---
 
-<section id="soluciones" class="solutions">
+<section id="solutions" class="solutions">
   <div class="content-container">
     <div class="section-title">
       <h2>{sectionTitle}</h2>
