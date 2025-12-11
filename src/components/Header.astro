@@ -26,6 +26,8 @@ const {
 <header>
   <nav>
     <div class="logo">{logo}</div>
+
+    <!-- Desktop Navigation -->
     <div class="nav-links">
       {
         navLinks.map((link) => (
@@ -35,5 +37,57 @@ const {
         ))
       }
     </div>
+
+    <!-- Mobile Menu Button -->
+    <button
+      class="mobile-menu-btn"
+      aria-label="Abrir menú"
+      aria-expanded="false"
+    >
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav-overlay">
+      <div class="mobile-nav-content">
+        {
+          navLinks.map((link) => (
+            <a
+              href={link.href}
+              class={`mobile-nav-link ${link.isCta ? "cta-nav" : ""}`}
+            >
+              {link.label}
+            </a>
+          ))
+        }
+      </div>
+    </div>
   </nav>
 </header>
+
+<script>
+  const mobileMenuBtn = document.querySelector(".mobile-menu-btn");
+  const mobileNavOverlay = document.querySelector(".mobile-nav-overlay");
+  const mobileNavLinks = document.querySelectorAll(".mobile-nav-link");
+
+  function toggleMobileMenu() {
+    const isOpen = mobileMenuBtn?.classList.toggle("active");
+    mobileNavOverlay?.classList.toggle("active");
+    mobileMenuBtn?.setAttribute("aria-expanded", String(isOpen));
+    document.body.style.overflow = isOpen ? "hidden" : "";
+  }
+
+  mobileMenuBtn?.addEventListener("click", toggleMobileMenu);
+
+  // Close menu when clicking a link
+  mobileNavLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      mobileMenuBtn?.classList.remove("active");
+      mobileNavOverlay?.classList.remove("active");
+      mobileMenuBtn?.setAttribute("aria-expanded", "false");
+      document.body.style.overflow = "";
+    });
+  });
+</script>
