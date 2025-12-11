@@ -1,0 +1,41 @@
+---
+interface VacancyInfo {
+  icon: string;
+  label: string;
+  value: string;
+}
+
+interface Props {
+  title: string;
+  info: VacancyInfo[];
+  description: string;
+  buttonText?: string;
+  buttonHref?: string;
+}
+
+const {
+  title,
+  info,
+  description,
+  buttonText = "Apply Now",
+  buttonHref = "/contact",
+} = Astro.props;
+---
+
+<div class="vacancy-card">
+  <h3>{title}</h3>
+  <div class="vacancy-info">
+    {
+      info.map((item) => (
+        <div class="vacancy-info-item">
+          <span>{item.icon}</span>
+          <span>
+            <strong>{item.label}:</strong> {item.value}
+          </span>
+        </div>
+      ))
+    }
+  </div>
+  <p>{description}</p>
+  <a href={buttonHref} class="btn-primary vacancy-btn">{buttonText}</a>
+</div>

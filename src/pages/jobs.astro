@@ -1,0 +1,436 @@
+---
+import "../styles/styles.css";
+import Layout from "../layouts/Layout.astro";
+import VacancyCard from "../components/VacancyCard.astro";
+
+// Enable SSR for this page to read URL query parameters
+export const prerender = false;
+
+// Sample job offers data (30 jobs)
+const allJobs = [
+  {
+    id: 1,
+    title: "Senior Backend Developer (.NET)",
+    info: [
+      { icon: "📍", label: "Location", value: "Remote / New York" },
+      { icon: "💼", label: "Type", value: "Full-time" },
+      { icon: "💰", label: "Salary", value: "$90k - $120k" },
+    ],
+    description:
+      "Build robust microservices with C# and .NET for our Personnel module. Work with hexagonal architecture, Entity Framework, and SQL Server.",
+  },
+  {
+    id: 2,
+    title: "Backend Developer (Java/Spring)",
+    info: [
+      { icon: "📍", label: "Location", value: "Hybrid - Boston" },
+      { icon: "💼", label: "Type", value: "Full-time" },
+      { icon: "💰", label: "Salary", value: "$85k - $110k" },
+    ],
+    description:
+      "Develop scalable services with Spring Boot and PostgreSQL for our recruitment system. Experience with REST APIs and clean architecture required.",
+  },
+  {
+    id: 3,
+    title: "Frontend Developer (React/Next.js)",
+    info: [
+      { icon: "📍", label: "Location", value: "Remote" },
+      { icon: "💼", label: "Type", value: "Full-time" },
+      { icon: "💰", label: "Salary", value: "$80k - $105k" },
+    ],
+    description:
+      "Create modern, responsive interfaces with Next.js and TypeScript for HexaLink portals. Strong CSS and component design skills needed.",
+  },
+  {
+    id: 4,
+    title: "DevOps Engineer",
+    info: [
+      { icon: "📍", label: "Location", value: "Remote" },
+      { icon: "💼", label: "Type", value: "Full-time" },
+      { icon: "💰", label: "Salary", value: "$95k - $125k" },
+    ],
+    description:
+      "Manage CI/CD pipelines, Kubernetes clusters, and cloud infrastructure. Experience with AWS/Azure and Terraform preferred.",
+  },
+  {
+    id: 5,
+    title: "UX/UI Designer",
+    info: [
+      { icon: "📍", label: "Location", value: "Hybrid - San Francisco" },
+      { icon: "💼", label: "Type", value: "Full-time" },
+      { icon: "💰", label: "Salary", value: "$75k - $95k" },
+    ],
+    description:
+      "Design intuitive user experiences for our HR platform. Proficiency in Figma and user research methodologies required.",
+  },
+  {
+    id: 6,
+    title: "Product Manager",
+    info: [
+      { icon: "📍", label: "Location", value: "Hybrid - New York" },
+      { icon: "💼", label: "Type", value: "Full-time" },
+      { icon: "💰", label: "Salary", value: "$100k - $130k" },
+    ],
+    description:
+      "Lead product strategy for our recruitment module. Work with engineering and design teams to deliver features that delight our customers.",
+  },
+  {
+    id: 7,
+    title: "QA Engineer",
+    info: [
+      { icon: "📍", label: "Location", value: "Remote" },
+      { icon: "💼", label: "Type", value: "Full-time" },
+      { icon: "💰", label: "Salary", value: "$70k - $90k" },
+    ],
+    description:
+      "Ensure software quality through automated testing. Experience with Selenium, Cypress, and API testing tools required.",
+  },
+  {
+    id: 8,
+    title: "Data Analyst",
+    info: [
+      { icon: "📍", label: "Location", value: "Remote" },
+      { icon: "💼", label: "Type", value: "Full-time" },
+      { icon: "💰", label: "Salary", value: "$75k - $95k" },
+    ],
+    description:
+      "Analyze HR data to provide actionable insights. Strong SQL skills and experience with visualization tools like Tableau or Power BI.",
+  },
+  {
+    id: 9,
+    title: "Technical Support Specialist",
+    info: [
+      { icon: "📍", label: "Location", value: "Remote" },
+      { icon: "💼", label: "Type", value: "Full-time" },
+      { icon: "💰", label: "Salary", value: "$50k - $65k" },
+    ],
+    description:
+      "Provide exceptional technical support to our customers. Troubleshoot issues and work with engineering to resolve complex problems.",
+  },
+  {
+    id: 10,
+    title: "Mobile Developer (React Native)",
+    info: [
+      { icon: "📍", label: "Location", value: "Remote" },
+      { icon: "💼", label: "Type", value: "Contract" },
+      { icon: "💰", label: "Salary", value: "$85k - $110k" },
+    ],
+    description:
+      "Build cross-platform mobile applications for our HR platform. Experience with React Native and mobile app deployment required.",
+  },
+  // Page 2
+  {
+    id: 11,
+    title: "Cloud Architect",
+    info: [
+      { icon: "📍", label: "Location", value: "Remote" },
+      { icon: "💼", label: "Type", value: "Full-time" },
+      { icon: "💰", label: "Salary", value: "$130k - $160k" },
+    ],
+    description:
+      "Design and implement cloud infrastructure solutions. Deep experience with AWS, Azure, or GCP and infrastructure as code required.",
+  },
+  {
+    id: 12,
+    title: "Security Engineer",
+    info: [
+      { icon: "📍", label: "Location", value: "Hybrid - Chicago" },
+      { icon: "💼", label: "Type", value: "Full-time" },
+      { icon: "💰", label: "Salary", value: "$110k - $140k" },
+    ],
+    description:
+      "Protect our platform and customer data. Experience with security audits, penetration testing, and compliance frameworks.",
+  },
+  {
+    id: 13,
+    title: "Machine Learning Engineer",
+    info: [
+      { icon: "📍", label: "Location", value: "Remote" },
+      { icon: "💼", label: "Type", value: "Full-time" },
+      { icon: "💰", label: "Salary", value: "$120k - $150k" },
+    ],
+    description:
+      "Build ML models for talent matching and HR analytics. Strong Python skills and experience with TensorFlow or PyTorch required.",
+  },
+  {
+    id: 14,
+    title: "Technical Writer",
+    info: [
+      { icon: "📍", label: "Location", value: "Remote" },
+      { icon: "💼", label: "Type", value: "Part-time" },
+      { icon: "💰", label: "Salary", value: "$45k - $60k" },
+    ],
+    description:
+      "Create clear documentation for our APIs and products. Excellent writing skills and technical understanding required.",
+  },
+  {
+    id: 15,
+    title: "Scrum Master",
+    info: [
+      { icon: "📍", label: "Location", value: "Hybrid - Austin" },
+      { icon: "💼", label: "Type", value: "Full-time" },
+      { icon: "💰", label: "Salary", value: "$90k - $115k" },
+    ],
+    description:
+      "Facilitate agile processes for our engineering teams. Certified Scrum Master with experience in software development teams.",
+  },
+  {
+    id: 16,
+    title: "Database Administrator",
+    info: [
+      { icon: "📍", label: "Location", value: "Remote" },
+      { icon: "💼", label: "Type", value: "Full-time" },
+      { icon: "💰", label: "Salary", value: "$85k - $110k" },
+    ],
+    description:
+      "Manage and optimize our PostgreSQL and SQL Server databases. Experience with performance tuning and backup strategies.",
+  },
+  {
+    id: 17,
+    title: "Site Reliability Engineer",
+    info: [
+      { icon: "📍", label: "Location", value: "Remote" },
+      { icon: "💼", label: "Type", value: "Full-time" },
+      { icon: "💰", label: "Salary", value: "$100k - $130k" },
+    ],
+    description:
+      "Ensure high availability and performance of our platform. Experience with monitoring, alerting, and incident response.",
+  },
+  {
+    id: 18,
+    title: "Full Stack Developer",
+    info: [
+      { icon: "📍", label: "Location", value: "Hybrid - Seattle" },
+      { icon: "💼", label: "Type", value: "Full-time" },
+      { icon: "💰", label: "Salary", value: "$95k - $125k" },
+    ],
+    description:
+      "Work on both frontend and backend features. Proficiency in React, Node.js, and SQL databases required.",
+  },
+  {
+    id: 19,
+    title: "Customer Success Manager",
+    info: [
+      { icon: "📍", label: "Location", value: "Remote" },
+      { icon: "💼", label: "Type", value: "Full-time" },
+      { icon: "💰", label: "Salary", value: "$70k - $90k" },
+    ],
+    description:
+      "Help customers achieve their goals with HexaLink. Strong communication skills and experience in B2B SaaS required.",
+  },
+  {
+    id: 20,
+    title: "Sales Development Representative",
+    info: [
+      { icon: "📍", label: "Location", value: "Hybrid - Miami" },
+      { icon: "💼", label: "Type", value: "Full-time" },
+      { icon: "💰", label: "Salary", value: "$50k - $70k + Commission" },
+    ],
+    description:
+      "Generate qualified leads for our sales team. Experience with outbound prospecting and CRM tools preferred.",
+  },
+  // Page 3
+  {
+    id: 21,
+    title: "iOS Developer (Swift)",
+    info: [
+      { icon: "📍", label: "Location", value: "Remote" },
+      { icon: "💼", label: "Type", value: "Full-time" },
+      { icon: "💰", label: "Salary", value: "$90k - $120k" },
+    ],
+    description:
+      "Build native iOS applications for our mobile HR suite. Experience with Swift, SwiftUI, and App Store deployment.",
+  },
+  {
+    id: 22,
+    title: "Android Developer (Kotlin)",
+    info: [
+      { icon: "📍", label: "Location", value: "Remote" },
+      { icon: "💼", label: "Type", value: "Full-time" },
+      { icon: "💰", label: "Salary", value: "$90k - $120k" },
+    ],
+    description:
+      "Develop Android applications using Kotlin and Jetpack Compose. Experience with Play Store deployment required.",
+  },
+  {
+    id: 23,
+    title: "Business Analyst",
+    info: [
+      { icon: "📍", label: "Location", value: "Hybrid - Denver" },
+      { icon: "💼", label: "Type", value: "Full-time" },
+      { icon: "💰", label: "Salary", value: "$75k - $95k" },
+    ],
+    description:
+      "Gather requirements and translate business needs into technical specifications. Strong analytical and communication skills.",
+  },
+  {
+    id: 24,
+    title: "Platform Engineer",
+    info: [
+      { icon: "📍", label: "Location", value: "Remote" },
+      { icon: "💼", label: "Type", value: "Full-time" },
+      { icon: "💰", label: "Salary", value: "$105k - $135k" },
+    ],
+    description:
+      "Build internal developer tools and platform services. Experience with Kubernetes, service mesh, and developer experience.",
+  },
+  {
+    id: 25,
+    title: "Marketing Manager",
+    info: [
+      { icon: "📍", label: "Location", value: "Hybrid - Los Angeles" },
+      { icon: "💼", label: "Type", value: "Full-time" },
+      { icon: "💰", label: "Salary", value: "$80k - $105k" },
+    ],
+    description:
+      "Lead marketing initiatives for HexaLink. Experience with B2B marketing, content strategy, and demand generation.",
+  },
+  {
+    id: 26,
+    title: "HR Technology Consultant",
+    info: [
+      { icon: "📍", label: "Location", value: "Remote" },
+      { icon: "💼", label: "Type", value: "Contract" },
+      { icon: "💰", label: "Salary", value: "$100k - $130k" },
+    ],
+    description:
+      "Advise clients on HR technology implementations. Deep knowledge of HRIS systems and change management.",
+  },
+  {
+    id: 27,
+    title: "Frontend Architect",
+    info: [
+      { icon: "📍", label: "Location", value: "Remote" },
+      { icon: "💼", label: "Type", value: "Full-time" },
+      { icon: "💰", label: "Salary", value: "$130k - $160k" },
+    ],
+    description:
+      "Define frontend architecture and best practices. Expert-level React knowledge and experience leading frontend teams.",
+  },
+  {
+    id: 28,
+    title: "Integration Specialist",
+    info: [
+      { icon: "📍", label: "Location", value: "Remote" },
+      { icon: "💼", label: "Type", value: "Full-time" },
+      { icon: "💰", label: "Salary", value: "$75k - $95k" },
+    ],
+    description:
+      "Build integrations with third-party HR systems. Experience with REST APIs, webhooks, and enterprise integration patterns.",
+  },
+  {
+    id: 29,
+    title: "Performance Engineer",
+    info: [
+      { icon: "📍", label: "Location", value: "Remote" },
+      { icon: "💼", label: "Type", value: "Full-time" },
+      { icon: "💰", label: "Salary", value: "$95k - $125k" },
+    ],
+    description:
+      "Optimize application performance and scalability. Experience with load testing, profiling, and performance monitoring.",
+  },
+  {
+    id: 30,
+    title: "Engineering Manager",
+    info: [
+      { icon: "📍", label: "Location", value: "Hybrid - New York" },
+      { icon: "💼", label: "Type", value: "Full-time" },
+      { icon: "💰", label: "Salary", value: "$150k - $180k" },
+    ],
+    description:
+      "Lead a team of talented engineers building our core platform. Experience managing engineering teams and delivering complex projects.",
+  },
+];
+
+// Pagination logic
+const url = Astro.url;
+const currentPage = parseInt(url.searchParams.get("page") || "1");
+const jobsPerPage = 10;
+const totalPages = Math.ceil(allJobs.length / jobsPerPage);
+
+// Ensure currentPage is within valid range
+const validCurrentPage = Math.max(1, Math.min(currentPage, totalPages));
+
+const startIndex = (validCurrentPage - 1) * jobsPerPage;
+const endIndex = startIndex + jobsPerPage;
+const currentJobs = allJobs.slice(startIndex, endIndex);
+---
+
+<Layout
+  title="Job Offers - HexaLink"
+  description="Explore career opportunities at HexaLink. Join our team and help build the future of human capital management."
+>
+  <main class="jobs-page">
+    <div class="jobs-container">
+      <div class="jobs-header">
+        <h1>Job Offers</h1>
+        <p>Join our team and build the future of human capital management</p>
+        <div class="jobs-count">
+          <span>{allJobs.length} open positions</span>
+        </div>
+      </div>
+
+      <div class="jobs-grid">
+        {
+          currentJobs.map((job) => (
+            <VacancyCard
+              title={job.title}
+              info={job.info}
+              description={job.description}
+              buttonText="Apply Now"
+              buttonHref="/contact"
+            />
+          ))
+        }
+      </div>
+
+      <!-- Pagination -->
+      {
+        totalPages > 1 && (
+          <nav class="pagination">
+            <a
+              href={
+                validCurrentPage > 1
+                  ? `/jobs?page=${validCurrentPage - 1}`
+                  : "#"
+              }
+              class={`pagination-btn ${validCurrentPage === 1 ? "disabled" : ""}`}
+            >
+              ← Previous
+            </a>
+
+            <div class="pagination-numbers">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                (pageNum) => (
+                  <a
+                    href={`/jobs?page=${pageNum}`}
+                    class={`pagination-number ${pageNum === validCurrentPage ? "active" : ""}`}
+                  >
+                    {pageNum}
+                  </a>
+                )
+              )}
+            </div>
+
+            <a
+              href={
+                validCurrentPage < totalPages
+                  ? `/jobs?page=${validCurrentPage + 1}`
+                  : "#"
+              }
+              class={`pagination-btn ${validCurrentPage === totalPages ? "disabled" : ""}`}
+            >
+              Next →
+            </a>
+          </nav>
+        )
+      }
+
+      <div class="pagination-info">
+        Showing {startIndex + 1}-{Math.min(endIndex, allJobs.length)} of {
+          allJobs.length
+        } positions
+      </div>
+    </div>
+  </main>
+</Layout>

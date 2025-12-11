@@ -1554,3 +1554,212 @@ body.dark-mode .form-group select {
     border-radius: 15px;
   }
 }
+
+/* ============================================
+   JOBS PAGE STYLES
+   ============================================ */
+
+.jobs-page {
+  padding-top: 100px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e6f7f5 0%, #ffffff 100%);
+}
+
+.jobs-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 60px 5%;
+}
+
+.jobs-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.jobs-header h1 {
+  font-size: 2.5rem;
+  color: #1a202c;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.jobs-header p {
+  color: #718096;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.jobs-count {
+  display: inline-block;
+  background: #0d9488;
+  color: white;
+  padding: 0.5rem 1.25rem;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.jobs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.pagination-btn {
+  padding: 0.75rem 1.5rem;
+  background: white;
+  color: #0d9488;
+  border: 2px solid #0d9488;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.pagination-btn:hover:not(.disabled) {
+  background: #0d9488;
+  color: white;
+}
+
+.pagination-btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.pagination-numbers {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.pagination-number {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  color: #4a5568;
+  border: 2px solid #e6f7f5;
+  border-radius: 50%;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.pagination-number:hover {
+  border-color: #0d9488;
+  color: #0d9488;
+}
+
+.pagination-number.active {
+  background: #0d9488;
+  color: white;
+  border-color: #0d9488;
+}
+
+/* Dark mode for jobs page */
+body.dark-mode .jobs-page {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}
+
+body.dark-mode .jobs-header h1 {
+  color: #f1f5f9;
+}
+
+body.dark-mode .pagination-btn {
+  background: #1e293b;
+  border-color: #0d9488;
+}
+
+body.dark-mode .pagination-btn:hover:not(.disabled) {
+  background: #0d9488;
+}
+
+body.dark-mode .pagination-number {
+  background: #1e293b;
+  border-color: #334155;
+  color: #cbd5e1;
+}
+
+body.dark-mode .pagination-number:hover {
+  border-color: #0d9488;
+  color: #0d9488;
+}
+
+body.dark-mode .pagination-number.active {
+  background: #0d9488;
+  color: white;
+}
+
+/* Jobs page responsive */
+@media (max-width: 1024px) {
+  .jobs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .jobs-container {
+    padding: 40px 5%;
+  }
+
+  .jobs-header h1 {
+    font-size: 2rem;
+  }
+
+  .jobs-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .pagination {
+    gap: 0.5rem;
+  }
+
+  .pagination-btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .jobs-container {
+    padding: 30px 4%;
+  }
+
+  .jobs-header h1 {
+    font-size: 1.75rem;
+  }
+
+  .pagination-numbers {
+    gap: 0.25rem;
+  }
+
+  .pagination-number {
+    width: 35px;
+    height: 35px;
+    font-size: 0.9rem;
+  }
+}
+
+.pagination-info {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #718096;
+  font-size: 0.95rem;
+}
+
+body.dark-mode .pagination-info {
+  color: #94a3b8;
+}
