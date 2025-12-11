@@ -1,0 +1,19 @@
+---
+interface Props {
+  icon: string;
+  title: string;
+  description: string;
+  features: string[];
+}
+
+const { icon, title, description, features } = Astro.props;
+---
+
+<div class="solution-card">
+  <div class="solution-icon">{icon}</div>
+  <h3>{title}</h3>
+  <p>{description}</p>
+  <ul class="solution-features">
+    {features.map((feature) => <li>{feature}</li>)}
+  </ul>
+</div>

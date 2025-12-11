@@ -1,15 +1,117 @@
 ---
 import "../styles/styles.css";
 import Layout from "../layouts/Layout.astro";
-import Hero from "../components/Hero.astro";
-import About from "../components/About.astro";
-import Solutions from "../components/Solutions.astro";
-import Contact from "../components/Contact.astro";
+import AboutCard from "../components/AboutCard.astro";
+import SolutionCard from "../components/SolutionCard.astro";
 ---
 
 <Layout>
-  <Hero />
-  <About />
-  <Solutions />
-  <Contact />
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1>Unified Platform for <span>Human Capital</span></h1>
+        <p>
+          Automate your HR and recruitment processes with HexaLink. A modern
+          microservices-based solution that connects personnel, time off,
+          notifications, and job management in one place.
+        </p>
+        <div class="cta-buttons">
+          <a href="/contact" class="btn-primary">Get Started</a>
+          <a href="#solutions" class="btn-secondary">Learn More</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img
+          src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=600&fit=crop"
+          alt="HexaLink Team"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="about">
+    <div class="content-container">
+      <div class="section-title">
+        <h2>About HexaLink</h2>
+        <p>
+          We transform human capital management with cutting-edge technology
+        </p>
+      </div>
+      <div class="about-grid">
+        <AboutCard
+          icon="🎯"
+          title="Mission"
+          description="Simplify and automate human resources management processes through an integrated platform that improves operational efficiency and employee experience."
+        />
+        <AboutCard
+          icon="🚀"
+          title="Vision"
+          description="To be the leading platform in human capital solutions, using modern microservices architectures to deliver scalability, flexibility, and technological excellence."
+        />
+        <AboutCard
+          icon="💎"
+          title="Values"
+          description="Continuous innovation, process transparency, operational efficiency, and commitment to excellence in every interaction with our users."
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Solutions Section -->
+  <section id="solutions" class="solutions">
+    <div class="content-container">
+      <div class="section-title">
+        <h2>Our Solutions</h2>
+        <p>Integrated modules for complete human capital management</p>
+      </div>
+      <div class="solutions-grid">
+        <SolutionCard
+          icon="👥"
+          title="Personnel Module"
+          description="Manage the entire employee lifecycle from a single place with powerful and easy-to-use tools."
+          features={[
+            "Complete employee and profile management",
+            "Time off requests with approval workflow",
+            "Real-time notification system",
+            "HR reports and analytics",
+          ]}
+        />
+        <SolutionCard
+          icon="🎯"
+          title="Recruitment Module"
+          description="Optimize your selection process with complete candidate and job opening tracking."
+          features={[
+            "Job posting and management",
+            "Candidate database",
+            "Interview and evaluation tracking",
+            "Internal talent search",
+          ]}
+        />
+        <SolutionCard
+          icon="🔗"
+          title="Continuous Integration"
+          description="Microservices architecture enabling seamless communication between all system modules."
+          features={[
+            "Scalable and secure RESTful API",
+            "Automatic data synchronization",
+            "Modular hexagonal architecture",
+            "Continuous deployment (CI/CD)",
+          ]}
+        />
+        <SolutionCard
+          icon="📊"
+          title="Reports & Analytics"
+          description="Make data-driven decisions with interactive dashboards and customizable reports."
+          features={[
+            "Real-time HR KPIs",
+            "Job openings and hiring analysis",
+            "Request and approval metrics",
+            "Multi-format data export",
+          ]}
+        />
+      </div>
+    </div>
+  </section>
 </Layout>
