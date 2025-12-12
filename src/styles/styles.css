@@ -576,6 +576,11 @@ footer {
   transition: all 0.3s;
 }
 
+.social-link img {
+  filter: brightness(0) invert(1);
+  transition: filter 0.3s;
+}
+
 .social-link:hover {
   background: #0d9488;
   color: white;
