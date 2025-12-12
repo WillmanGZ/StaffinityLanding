@@ -1763,3 +1763,250 @@ body.dark-mode .pagination-number.active {
 body.dark-mode .pagination-info {
   color: #94a3b8;
 }
+
+/* ============================================
+   ABOUT PAGE STYLES
+   ============================================ */
+
+.about-page {
+  padding-top: 100px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e6f7f5 0%, #ffffff 100%);
+}
+
+.about-page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 5%;
+}
+
+.about-page-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.about-page-header h1 {
+  font-size: 2.5rem;
+  color: #1a202c;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.about-page-header p {
+  color: #718096;
+  font-size: 1.1rem;
+}
+
+.about-page .about-grid {
+  margin-bottom: 4rem;
+}
+
+.about-story {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  background: white;
+  padding: 3rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+}
+
+.about-story-content h2 {
+  font-size: 1.75rem;
+  color: #1a202c;
+  margin-bottom: 1.5rem;
+}
+
+.about-story-content p {
+  color: #4a5568;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+
+.about-story-image img {
+  width: 100%;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+.stat-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+  border: 1px solid #ccfbf1;
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  border-color: #0d9488;
+}
+
+.stat-number {
+  display: block;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #0d9488;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  color: #4a5568;
+  font-size: 0.95rem;
+}
+
+/* ============================================
+   SOLUTIONS PAGE STYLES
+   ============================================ */
+
+.solutions-page {
+  padding-top: 100px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e6f7f5 0%, #ffffff 100%);
+}
+
+.solutions-page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 5%;
+}
+
+.solutions-page-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.solutions-page-header h1 {
+  font-size: 2.5rem;
+  color: #1a202c;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.solutions-page-header p {
+  color: #718096;
+  font-size: 1.1rem;
+}
+
+.solutions-page .solutions-grid {
+  margin-bottom: 4rem;
+}
+
+.solutions-cta {
+  text-align: center;
+  background: white;
+  padding: 3rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+}
+
+.solutions-cta h2 {
+  font-size: 1.75rem;
+  color: #1a202c;
+  margin-bottom: 1rem;
+}
+
+.solutions-cta p {
+  color: #4a5568;
+  margin-bottom: 2rem;
+}
+
+/* Dark mode for About and Solutions */
+body.dark-mode .about-page,
+body.dark-mode .solutions-page {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}
+
+body.dark-mode .about-page-header h1,
+body.dark-mode .solutions-page-header h1 {
+  color: #f1f5f9;
+}
+
+body.dark-mode .about-story,
+body.dark-mode .solutions-cta {
+  background: #1e293b;
+}
+
+body.dark-mode .about-story-content h2,
+body.dark-mode .solutions-cta h2 {
+  color: #f1f5f9;
+}
+
+body.dark-mode .about-story-content p,
+body.dark-mode .solutions-cta p {
+  color: #cbd5e1;
+}
+
+body.dark-mode .stat-card {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+body.dark-mode .stat-label {
+  color: #cbd5e1;
+}
+
+/* Responsive for About and Solutions */
+@media (max-width: 1024px) {
+  .about-story {
+    grid-template-columns: 1fr;
+  }
+
+  .about-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .about-page-container,
+  .solutions-page-container {
+    padding: 40px 5%;
+  }
+
+  .about-page-header h1,
+  .solutions-page-header h1 {
+    font-size: 2rem;
+  }
+
+  .about-story {
+    padding: 2rem;
+  }
+
+  .solutions-cta {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-page-container,
+  .solutions-page-container {
+    padding: 30px 4%;
+  }
+
+  .about-page-header h1,
+  .solutions-page-header h1 {
+    font-size: 1.75rem;
+  }
+
+  .about-stats {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .stat-card {
+    padding: 1.5rem;
+  }
+
+  .stat-number {
+    font-size: 2rem;
+  }
+}

@@ -1,40 +1,18 @@
 ---
-interface NavLink {
-  href: string;
-  label: string;
-  isCta?: boolean;
-}
 
-interface Props {
-  logo?: string;
-  navLinks?: NavLink[];
-}
-
-const {
-  logo = "HexaLink",
-  navLinks = [
-    { href: "/#home", label: "Home" },
-    { href: "/#about", label: "About" },
-    { href: "/#solutions", label: "Solutions" },
-    { href: "/contact", label: "Contact" },
-    { href: "/jobs", label: "Job Offers", isCta: true },
-  ],
-} = Astro.props;
 ---
 
 <header>
   <nav>
-    <div class="logo">{logo}</div>
+    <div class="logo">HexaLink</div>
 
     <!-- Desktop Navigation -->
     <div class="nav-links">
-      {
-        navLinks.map((link) => (
-          <a href={link.href} class={link.isCta ? "cta-nav" : ""}>
-            {link.label}
-          </a>
-        ))
-      }
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+      <a href="/solutions">Solutions</a>
+      <a href="/contact">Contact</a>
+      <a href="/jobs" class="cta-nav">Job Offers</a>
     </div>
 
     <!-- Mobile Menu Button -->
@@ -51,16 +29,11 @@ const {
     <!-- Mobile Navigation Overlay -->
     <div class="mobile-nav-overlay">
       <div class="mobile-nav-content">
-        {
-          navLinks.map((link) => (
-            <a
-              href={link.href}
-              class={`mobile-nav-link ${link.isCta ? "cta-nav" : ""}`}
-            >
-              {link.label}
-            </a>
-          ))
-        }
+        <a href="/" class="mobile-nav-link">Home</a>
+        <a href="/about" class="mobile-nav-link">About</a>
+        <a href="/solutions" class="mobile-nav-link">Solutions</a>
+        <a href="/contact" class="mobile-nav-link">Contact</a>
+        <a href="/jobs" class="mobile-nav-link cta-nav">Job Offers</a>
       </div>
     </div>
   </nav>
@@ -80,7 +53,6 @@ const {
 
   mobileMenuBtn?.addEventListener("click", toggleMobileMenu);
 
-  // Close menu when clicking a link
   mobileNavLinks.forEach((link) => {
     link.addEventListener("click", () => {
       mobileMenuBtn?.classList.remove("active");

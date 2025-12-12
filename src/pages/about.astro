@@ -1,0 +1,82 @@
+---
+import "../styles/styles.css";
+import Layout from "../layouts/Layout.astro";
+import AboutCard from "../components/AboutCard.astro";
+---
+
+<Layout
+  title="About Us - HexaLink"
+  description="Learn about HexaLink's mission, vision, and values. We transform human capital management with cutting-edge technology."
+>
+  <main class="about-page">
+    <div class="about-page-container">
+      <div class="about-page-header">
+        <h1>About HexaLink</h1>
+        <p>
+          We transform human capital management with cutting-edge technology
+        </p>
+      </div>
+
+      <div class="about-grid">
+        <AboutCard
+          icon="🎯"
+          title="Mission"
+          description="Simplify and automate human resources management processes through an integrated platform that improves operational efficiency and employee experience."
+        />
+        <AboutCard
+          icon="🚀"
+          title="Vision"
+          description="To be the leading platform in human capital solutions, using modern microservices architectures to deliver scalability, flexibility, and technological excellence."
+        />
+        <AboutCard
+          icon="💎"
+          title="Values"
+          description="Continuous innovation, process transparency, operational efficiency, and commitment to excellence in every interaction with our users."
+        />
+      </div>
+
+      <section class="about-story">
+        <div class="about-story-content">
+          <h2>Our Story</h2>
+          <p>
+            HexaLink was founded with a simple yet powerful vision: to
+            revolutionize how companies manage their most valuable asset—their
+            people. We recognized that traditional HR systems were fragmented,
+            outdated, and failed to meet the needs of modern organizations.
+          </p>
+          <p>
+            Today, HexaLink serves companies of all sizes, providing a unified
+            platform that streamlines personnel management, recruitment,
+            time-off tracking, and analytics. Our microservices architecture
+            ensures scalability, reliability, and continuous innovation.
+          </p>
+        </div>
+        <div class="about-story-image">
+          <img
+            src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=400&fit=crop"
+            alt="HexaLink Team Collaboration"
+          />
+        </div>
+      </section>
+
+      <section class="about-stats">
+        <div class="stat-card">
+          <span class="stat-number">500+</span>
+          <span class="stat-label">Companies Trust Us</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">50K+</span>
+          <span class="stat-label">Employees Managed</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">99.9%</span>
+          <span class="stat-label">Uptime Guarantee</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">24/7</span>
+          <span class="stat-label">Support Available</span>
+        </div>
+      </section>
+    </div>
+  </main>
+</Layout>

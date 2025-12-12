@@ -1,89 +1,46 @@
 ---
-interface SocialLink {
-  href: string;
-  label: string;
-}
-
-interface FooterLinkGroup {
-  title: string;
-  links: { href: string; label: string }[];
-}
-
-interface Props {
-  brandName?: string;
-  brandDescription?: string;
-  socialLinks?: SocialLink[];
-  linkGroups?: FooterLinkGroup[];
-  copyright?: string;
-}
-
-const {
-  brandName = "HexaLink",
-  brandDescription = "Comprehensive human capital management platform. We transform the way companies manage their talent with modern and efficient technology.",
-  socialLinks = [
-    { href: "#", label: "Li" },
-    { href: "#", label: "Tw" },
-    { href: "#", label: "Fb" },
-    { href: "#", label: "Ig" },
-  ],
-  linkGroups = [
-    {
-      title: "Solutions",
-      links: [
-        { href: "/#solutions", label: "Personnel Module" },
-        { href: "/#solutions", label: "Recruitment" },
-        { href: "/#solutions", label: "Analytics" },
-        { href: "/#solutions", label: "Integrations" },
-      ],
-    },
-    {
-      title: "Company",
-      links: [
-        { href: "/#about", label: "About Us" },
-        { href: "/contact", label: "Contact" },
-      ],
-    },
-    {
-      title: "Legal",
-      links: [
-        { href: "/terms", label: "Terms of Service" },
-        { href: "/privacy", label: "Privacy Policy" },
-        { href: "/cookies", label: "Cookies" },
-        { href: "/licenses", label: "Licenses" },
-      ],
-    },
-  ],
-  copyright = "© 2024 HexaLink. All rights reserved.",
-} = Astro.props;
+const currentYear = new Date().getFullYear();
 ---
 
 <footer>
   <div class="footer-content">
     <div class="footer-about">
-      <h3>{brandName}</h3>
-      <p>{brandDescription}</p>
+      <h3>HexaLink</h3>
+      <p>
+        Comprehensive human capital management platform. We transform the way
+        companies manage their talent with modern and efficient technology.
+      </p>
       <div class="social-links">
-        {
-          socialLinks.map((link) => (
-            <a href={link.href} class="social-link">
-              {link.label}
-            </a>
-          ))
-        }
+        <a href="#" class="social-link">Li</a>
+        <a href="#" class="social-link">Tw</a>
+        <a href="#" class="social-link">Fb</a>
+        <a href="#" class="social-link">Ig</a>
       </div>
     </div>
-    {
-      linkGroups.map((group) => (
-        <div class="footer-links">
-          <h4>{group.title}</h4>
-          {group.links.map((link) => (
-            <a href={link.href}>{link.label}</a>
-          ))}
-        </div>
-      ))
-    }
+
+    <div class="footer-links">
+      <h4>Solutions</h4>
+      <a href="/solutions">Personnel Module</a>
+      <a href="/solutions">Recruitment</a>
+      <a href="/solutions">Analytics</a>
+      <a href="/solutions">Integrations</a>
+    </div>
+
+    <div class="footer-links">
+      <h4>Company</h4>
+      <a href="/about">About Us</a>
+      <a href="/contact">Contact</a>
+    </div>
+
+    <div class="footer-links">
+      <h4>Legal</h4>
+      <a href="/terms">Terms of Service</a>
+      <a href="/privacy">Privacy Policy</a>
+      <a href="/cookies">Cookies</a>
+      <a href="/licenses">Licenses</a>
+    </div>
   </div>
   <div class="footer-bottom">
-    <p>{copyright}</p>
+    <p>© {currentYear} HexaLink. All rights reserved.</p>
   </div>
 </footer>

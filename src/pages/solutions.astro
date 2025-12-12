@@ -1,0 +1,66 @@
+---
+import "../styles/styles.css";
+import Layout from "../layouts/Layout.astro";
+import SolutionCard from "../components/SolutionCard.astro";
+---
+
+<Layout
+  title="Our Solutions - HexaLink"
+  description="Explore HexaLink's integrated modules for complete human capital management including personnel, recruitment, and analytics."
+>
+  <main class="solutions-page">
+    <div class="solutions-page-container">
+      <div class="solutions-page-header">
+        <h1>Our Solutions</h1>
+        <p>Integrated modules for complete human capital management</p>
+      </div>
+
+      <div class="solutions-grid">
+        <SolutionCard
+          icon="👥"
+          title="Personnel Module"
+          description="Manage the entire employee lifecycle from a single place with powerful and easy-to-use tools."
+          features={[
+            "Complete employee and profile management",
+            "Time off requests with approval workflow",
+            "Real-time notification system",
+            "HR reports and analytics",
+          ]}
+        />
+        <SolutionCard
+          icon="🎯"
+          title="Recruitment Module"
+          description="Optimize your selection process with complete candidate and job opening tracking."
+          features={[
+            "Job posting and management",
+            "Candidate database",
+            "Interview and evaluation tracking",
+            "Internal talent search",
+          ]}
+        />
+        <SolutionCard
+          icon="🔗"
+          title="Continuous Integration"
+          description="Microservices architecture enabling seamless communication between all system modules."
+          features={[
+            "Scalable and secure RESTful API",
+            "Automatic data synchronization",
+            "Modular hexagonal architecture",
+            "Continuous deployment (CI/CD)",
+          ]}
+        />
+        <SolutionCard
+          icon="📊"
+          title="Reports & Analytics"
+          description="Make data-driven decisions with interactive dashboards and customizable reports."
+          features={[
+            "Real-time HR KPIs",
+            "Job openings and hiring analysis",
+            "Request and approval metrics",
+            "Multi-format data export",
+          ]}
+        />
+      </div>
+    </div>
+  </main>
+</Layout>
