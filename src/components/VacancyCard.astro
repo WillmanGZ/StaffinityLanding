@@ -1,41 +1,94 @@
 ---
-interface VacancyInfo {
-  icon: string;
-  label: string;
-  value: string;
-}
-
 interface Props {
+  id: string;
   title: string;
-  info: VacancyInfo[];
   description: string;
+  requirements?: string;
+  location: string;
+  remoteAllowed: boolean;
+  seniority: string;
+  status: string;
+  salaryMin?: number;
+  salaryMax?: number;
+  currency?: string;
   buttonText?: string;
   buttonHref?: string;
 }
 
 const {
+  id,
   title,
-  info,
   description,
+  requirements,
+  location,
+  remoteAllowed,
+  seniority,
+  status,
+  salaryMin,
+  salaryMax,
+  currency = "USD",
   buttonText = "Apply Now",
   buttonHref = "/contact",
 } = Astro.props;
+
+// Format salary range
+const formatSalary = (min?: number, max?: number, curr?: string) => {
+  if (!min && !max) return null;
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: curr || "USD",
+    maximumFractionDigits: 0,
+  });
+  if (min && max) return `${formatter.format(min)} - ${formatter.format(max)}`;
+  if (min) return `From ${formatter.format(min)}`;
+  if (max) return `Up to ${formatter.format(max)}`;
+  return null;
+};
+
+const salaryDisplay = formatSalary(salaryMin, salaryMax, currency);
+const locationDisplay = remoteAllowed ? `${location} (Remote)` : location;
 ---
 
-<div class="vacancy-card">
-  <h3>{title}</h3>
+<div class="vacancy-card" data-vacancy-id={id}>
+  <div class="vacancy-header">
+    <h3>{title}</h3>
+    <span class={`vacancy-status status-${status.toLowerCase()}`}>{status}</span
+    >
+  </div>
+
   <div class="vacancy-info">
+    <div class="vacancy-info-item">
+      <span>📍</span>
+      <span><strong>Location:</strong> {locationDisplay}</span>
+    </div>
+    <div class="vacancy-info-item">
+      <span>💼</span>
+      <span><strong>Seniority:</strong> {seniority}</span>
+    </div>
     {
-      info.map((item) => (
+      salaryDisplay && (
         <div class="vacancy-info-item">
-          <span>{item.icon}</span>
+          <span>💰</span>
           <span>
-            <strong>{item.label}:</strong> {item.value}
+            <strong>Salary:</strong> {salaryDisplay}
           </span>
         </div>
-      ))
+      )
     }
   </div>
-  <p>{description}</p>
-  <a href={buttonHref} class="btn-primary vacancy-btn">{buttonText}</a>
+
+  <p class="vacancy-description">{description}</p>
+
+  {
+    requirements && (
+      <div class="vacancy-requirements">
+        <strong>Requirements:</strong>
+        <p>{requirements}</p>
+      </div>
+    )
+  }
+
+  <a href={`${buttonHref}?vacancy=${id}`} class="btn-primary vacancy-btn"
+    >{buttonText}</a
+  >
 </div>
