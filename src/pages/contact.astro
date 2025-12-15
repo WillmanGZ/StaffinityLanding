@@ -100,6 +100,7 @@ import Layout from "../layouts/Layout.astro";
               type="text"
               id="company"
               name="company"
+              required
               placeholder="Your Company Inc."
             />
           </div>
@@ -134,3 +135,36 @@ import Layout from "../layouts/Layout.astro";
     </div>
   </main>
 </Layout>
+
+<script>
+  const form = document.getElementById("contact-form") as HTMLFormElement;
+  const firstNameInput = document.getElementById(
+    "firstName"
+  ) as HTMLInputElement;
+  const lastNameInput = document.getElementById("lastName") as HTMLInputElement;
+  const emailInput = document.getElementById("email") as HTMLInputElement;
+  const companyInput = document.getElementById("company") as HTMLInputElement;
+  const subjectInput = document.getElementById("subject") as HTMLSelectElement;
+  const messageInput = document.getElementById(
+    "message"
+  ) as HTMLTextAreaElement;
+
+  form?.addEventListener("submit", async (event: Event) => {
+    event.preventDefault();
+
+    if (
+      !firstNameInput.value ||
+      !lastNameInput.value ||
+      !emailInput.value ||
+      !companyInput.value ||
+      !subjectInput.value ||
+      !messageInput.value
+    ) {
+      alert("Please fill in all fields");
+      return;
+    }
+
+    alert("Thank you for your message! We will answer soon");
+    form.reset();
+  });
+</script>
