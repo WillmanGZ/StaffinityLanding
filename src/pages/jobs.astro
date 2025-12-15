@@ -2,319 +2,26 @@
 import "../styles/styles.css";
 import Layout from "../layouts/Layout.astro";
 import VacancyCard from "../components/VacancyCard.astro";
+import vacancyService from "../services/vacancyService";
 
 // Enable SSR for this page to read URL query parameters
 export const prerender = false;
 
-// Sample job offers data matching VacancyResponse from backend
-const allJobs = [
-  {
-    id: "550e8400-e29b-41d4-a716-446655440001",
-    title: "Senior Backend Developer (.NET)",
-    description:
-      "Build robust microservices with C# and .NET for our Personnel module. Work with hexagonal architecture, Entity Framework, and SQL Server.",
-    requirements:
-      "5+ years with C#, .NET Core, Entity Framework. Experience with microservices and SQL Server.",
-    location: "New York",
-    remoteAllowed: true,
-    seniority: "Senior",
-    status: "Open",
-    salaryMin: 90000,
-    salaryMax: 120000,
-    currency: "USD",
-  },
-  {
-    id: "550e8400-e29b-41d4-a716-446655440002",
-    title: "Backend Developer (Java/Spring)",
-    description:
-      "Develop scalable services with Spring Boot and PostgreSQL for our recruitment system. Experience with REST APIs and clean architecture required.",
-    requirements:
-      "3+ years with Java, Spring Boot, PostgreSQL. Knowledge of REST APIs.",
-    location: "Boston",
-    remoteAllowed: false,
-    seniority: "Mid-Level",
-    status: "Open",
-    salaryMin: 85000,
-    salaryMax: 110000,
-    currency: "USD",
-  },
-  {
-    id: "550e8400-e29b-41d4-a716-446655440003",
-    title: "Frontend Developer (React/Next.js)",
-    description:
-      "Create modern, responsive interfaces with Next.js and TypeScript for HexaLink portals. Strong CSS and component design skills needed.",
-    requirements:
-      "3+ years with React, Next.js, TypeScript. Strong CSS skills.",
-    location: "Remote",
-    remoteAllowed: true,
-    seniority: "Mid-Level",
-    status: "Open",
-    salaryMin: 80000,
-    salaryMax: 105000,
-    currency: "USD",
-  },
-  {
-    id: "550e8400-e29b-41d4-a716-446655440004",
-    title: "DevOps Engineer",
-    description:
-      "Manage CI/CD pipelines, Kubernetes clusters, and cloud infrastructure. Experience with AWS/Azure and Terraform preferred.",
-    requirements:
-      "4+ years DevOps experience. AWS/Azure, Kubernetes, Terraform.",
-    location: "Remote",
-    remoteAllowed: true,
-    seniority: "Senior",
-    status: "Open",
-    salaryMin: 95000,
-    salaryMax: 125000,
-    currency: "USD",
-  },
-  {
-    id: "550e8400-e29b-41d4-a716-446655440005",
-    title: "UX/UI Designer",
-    description:
-      "Design intuitive user experiences for our HR platform. Proficiency in Figma and user research methodologies required.",
-    requirements: "3+ years UX/UI design. Figma, user research, prototyping.",
-    location: "San Francisco",
-    remoteAllowed: false,
-    seniority: "Mid-Level",
-    status: "Open",
-    salaryMin: 75000,
-    salaryMax: 95000,
-    currency: "USD",
-  },
-  {
-    id: "550e8400-e29b-41d4-a716-446655440006",
-    title: "Product Manager",
-    description:
-      "Lead product strategy for our recruitment module. Work with engineering and design teams to deliver features that delight our customers.",
-    requirements:
-      "5+ years product management in B2B SaaS. Strong communication skills.",
-    location: "New York",
-    remoteAllowed: false,
-    seniority: "Senior",
-    status: "Open",
-    salaryMin: 100000,
-    salaryMax: 130000,
-    currency: "USD",
-  },
-  {
-    id: "550e8400-e29b-41d4-a716-446655440007",
-    title: "QA Engineer",
-    description:
-      "Ensure software quality through automated testing. Experience with Selenium, Cypress, and API testing tools required.",
-    requirements: "3+ years QA experience. Selenium, Cypress, API testing.",
-    location: "Remote",
-    remoteAllowed: true,
-    seniority: "Mid-Level",
-    status: "Open",
-    salaryMin: 70000,
-    salaryMax: 90000,
-    currency: "USD",
-  },
-  {
-    id: "550e8400-e29b-41d4-a716-446655440008",
-    title: "Data Analyst",
-    description:
-      "Analyze HR data to provide actionable insights. Strong SQL skills and experience with visualization tools like Tableau or Power BI.",
-    requirements:
-      "2+ years data analysis. SQL, Tableau/Power BI, Python preferred.",
-    location: "Remote",
-    remoteAllowed: true,
-    seniority: "Junior",
-    status: "Open",
-    salaryMin: 75000,
-    salaryMax: 95000,
-    currency: "USD",
-  },
-  {
-    id: "550e8400-e29b-41d4-a716-446655440009",
-    title: "Technical Support Specialist",
-    description:
-      "Provide exceptional technical support to our customers. Troubleshoot issues and work with engineering to resolve complex problems.",
-    requirements:
-      "2+ years technical support. Strong communication and problem-solving.",
-    location: "Remote",
-    remoteAllowed: true,
-    seniority: "Junior",
-    status: "Open",
-    salaryMin: 50000,
-    salaryMax: 65000,
-    currency: "USD",
-  },
-  {
-    id: "550e8400-e29b-41d4-a716-446655440010",
-    title: "Mobile Developer (React Native)",
-    description:
-      "Build cross-platform mobile applications for our HR platform. Experience with React Native and mobile app deployment required.",
-    requirements:
-      "3+ years React Native. iOS and Android deployment experience.",
-    location: "Remote",
-    remoteAllowed: true,
-    seniority: "Mid-Level",
-    status: "Open",
-    salaryMin: 85000,
-    salaryMax: 110000,
-    currency: "USD",
-  },
-  {
-    id: "550e8400-e29b-41d4-a716-446655440011",
-    title: "Cloud Architect",
-    description:
-      "Design and implement cloud infrastructure solutions. Deep experience with AWS, Azure, or GCP and infrastructure as code required.",
-    requirements:
-      "7+ years cloud architecture. AWS/Azure/GCP, Terraform, Kubernetes.",
-    location: "Remote",
-    remoteAllowed: true,
-    seniority: "Senior",
-    status: "Open",
-    salaryMin: 130000,
-    salaryMax: 160000,
-    currency: "USD",
-  },
-  {
-    id: "550e8400-e29b-41d4-a716-446655440012",
-    title: "Security Engineer",
-    description:
-      "Protect our platform and customer data. Experience with security audits, penetration testing, and compliance frameworks.",
-    requirements:
-      "5+ years security engineering. Penetration testing, compliance.",
-    location: "Chicago",
-    remoteAllowed: false,
-    seniority: "Senior",
-    status: "Open",
-    salaryMin: 110000,
-    salaryMax: 140000,
-    currency: "USD",
-  },
-  {
-    id: "550e8400-e29b-41d4-a716-446655440013",
-    title: "Machine Learning Engineer",
-    description:
-      "Build ML models for talent matching and HR analytics. Strong Python skills and experience with TensorFlow or PyTorch required.",
-    requirements: "4+ years ML engineering. Python, TensorFlow/PyTorch, NLP.",
-    location: "Remote",
-    remoteAllowed: true,
-    seniority: "Senior",
-    status: "Open",
-    salaryMin: 120000,
-    salaryMax: 150000,
-    currency: "USD",
-  },
-  {
-    id: "550e8400-e29b-41d4-a716-446655440014",
-    title: "Technical Writer",
-    description:
-      "Create clear documentation for our APIs and products. Excellent writing skills and technical understanding required.",
-    requirements: "2+ years technical writing. API documentation experience.",
-    location: "Remote",
-    remoteAllowed: true,
-    seniority: "Junior",
-    status: "Open",
-    salaryMin: 45000,
-    salaryMax: 60000,
-    currency: "USD",
-  },
-  {
-    id: "550e8400-e29b-41d4-a716-446655440015",
-    title: "Scrum Master",
-    description:
-      "Facilitate agile processes for our engineering teams. Certified Scrum Master with experience in software development teams.",
-    requirements: "3+ years Scrum Master. CSM certification preferred.",
-    location: "Austin",
-    remoteAllowed: false,
-    seniority: "Mid-Level",
-    status: "Open",
-    salaryMin: 90000,
-    salaryMax: 115000,
-    currency: "USD",
-  },
-  {
-    id: "550e8400-e29b-41d4-a716-446655440016",
-    title: "Database Administrator",
-    description:
-      "Manage and optimize our PostgreSQL and SQL Server databases. Experience with performance tuning and backup strategies.",
-    requirements:
-      "4+ years DBA experience. PostgreSQL, SQL Server optimization.",
-    location: "Remote",
-    remoteAllowed: true,
-    seniority: "Mid-Level",
-    status: "Open",
-    salaryMin: 85000,
-    salaryMax: 110000,
-    currency: "USD",
-  },
-  {
-    id: "550e8400-e29b-41d4-a716-446655440017",
-    title: "Site Reliability Engineer",
-    description:
-      "Ensure high availability and performance of our platform. Experience with monitoring, alerting, and incident response.",
-    requirements: "4+ years SRE experience. Prometheus, Grafana, PagerDuty.",
-    location: "Remote",
-    remoteAllowed: true,
-    seniority: "Senior",
-    status: "Open",
-    salaryMin: 100000,
-    salaryMax: 130000,
-    currency: "USD",
-  },
-  {
-    id: "550e8400-e29b-41d4-a716-446655440018",
-    title: "Full Stack Developer",
-    description:
-      "Work on both frontend and backend features. Proficiency in React, Node.js, and SQL databases required.",
-    requirements:
-      "3+ years full stack development. React, Node.js, PostgreSQL.",
-    location: "Seattle",
-    remoteAllowed: false,
-    seniority: "Mid-Level",
-    status: "Open",
-    salaryMin: 95000,
-    salaryMax: 125000,
-    currency: "USD",
-  },
-  {
-    id: "550e8400-e29b-41d4-a716-446655440019",
-    title: "Customer Success Manager",
-    description:
-      "Help customers achieve their goals with HexaLink. Strong communication skills and experience in B2B SaaS required.",
-    requirements:
-      "3+ years customer success in B2B SaaS. Strong communication.",
-    location: "Remote",
-    remoteAllowed: true,
-    seniority: "Mid-Level",
-    status: "Open",
-    salaryMin: 70000,
-    salaryMax: 90000,
-    currency: "USD",
-  },
-  {
-    id: "550e8400-e29b-41d4-a716-446655440020",
-    title: "Sales Development Representative",
-    description:
-      "Generate qualified leads for our sales team. Experience with outbound prospecting and CRM tools preferred.",
-    requirements: "1+ years SDR experience. CRM tools, outbound prospecting.",
-    location: "Miami",
-    remoteAllowed: false,
-    seniority: "Junior",
-    status: "Open",
-    salaryMin: 50000,
-    salaryMax: 70000,
-    currency: "USD",
-  },
-];
+// Get all vacancies
+const vacancies = await vacancyService.getAll();
 
 // Pagination logic
 const url = Astro.url;
 const currentPage = parseInt(url.searchParams.get("page") || "1");
 const jobsPerPage = 10;
-const totalPages = Math.ceil(allJobs.length / jobsPerPage);
+const totalPages = Math.ceil(vacancies.length / jobsPerPage);
 
 // Ensure currentPage is within valid range
 const validCurrentPage = Math.max(1, Math.min(currentPage, totalPages));
 
 const startIndex = (validCurrentPage - 1) * jobsPerPage;
 const endIndex = startIndex + jobsPerPage;
-const currentJobs = allJobs.slice(startIndex, endIndex);
+const currentJobs = vacancies.slice(startIndex, endIndex);
 ---
 
 <Layout
@@ -327,7 +34,7 @@ const currentJobs = allJobs.slice(startIndex, endIndex);
         <h1>Job Offers</h1>
         <p>Join our team and build the future of human capital management</p>
         <div class="jobs-count">
-          <span>{allJobs.length} open positions</span>
+          <span>{vacancies.length} open positions</span>
         </div>
       </div>
 
@@ -396,8 +103,8 @@ const currentJobs = allJobs.slice(startIndex, endIndex);
       }
 
       <div class="pagination-info">
-        Showing {startIndex + 1}-{Math.min(endIndex, allJobs.length)} of {
-          allJobs.length
+        Showing {startIndex + 1}-{Math.min(endIndex, vacancies.length)} of {
+          vacancies.length
         } positions
       </div>
     </div>
