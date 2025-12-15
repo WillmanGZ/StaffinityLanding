@@ -3,12 +3,19 @@ import "../styles/styles.css";
 import Layout from "../layouts/Layout.astro";
 import VacancyCard from "../components/VacancyCard.astro";
 import vacancyService from "../services/vacancyService";
+import type { Vacancy } from "../interfaces/vacancy";
 
 // Enable SSR for this page to read URL query parameters
 export const prerender = false;
 
 // Get all vacancies
-const vacancies = await vacancyService.getAll();
+let vacancies: Vacancy[];
+
+try {
+  vacancies = await vacancyService.getAll();
+} catch {
+  vacancies = [];
+}
 
 // Pagination logic
 const url = Astro.url;
