@@ -2,7 +2,7 @@
 
 A modern, responsive landing page for **Hexalink** - a company that provides services in the field of human resources.
 
-![Hexalink](public/hexalink-letters.svg)
+![Hexalink](public/hexalink-complete-icon.svg)
 
 ## 🚀 Overview
 
