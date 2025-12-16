@@ -5,9 +5,6 @@ import VacancyCard from "../components/VacancyCard.astro";
 import vacancyService from "../services/vacancyService";
 import type { Vacancy } from "../interfaces/vacancy";
 
-// Enable SSR for this page to read URL query parameters
-export const prerender = false;
-
 // Get all vacancies
 let vacancies: Vacancy[];
 

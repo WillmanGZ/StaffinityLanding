@@ -1,16 +1,6 @@
-import axios from "axios";
 import type { VacancyResponse } from "../interfaces/vacancy.response";
 import type { Vacancy } from "../interfaces/vacancy";
-
-const API_BASE_URL = import.meta.env.PUBLIC_API_URL;
-
-// API Instance
-const apiClient = axios.create({
-  baseURL: API_BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+import { apiClient } from "../api/base-api";
 
 /**
  * Service for vacancy operations
@@ -35,6 +25,32 @@ export const vacancyService = {
       salaryMax: vacancy.salaryMax,
       currency: vacancy.currency,
     }));
+  },
+
+  /**
+   * Get a vacancy by ID
+   */
+  async getById(id: string): Promise<Vacancy | null> {
+    try {
+      const response = await apiClient.get<VacancyResponse>(`/vacancies/${id}`);
+      const vacancy = response.data;
+
+      return {
+        id: vacancy.id,
+        title: vacancy.title,
+        description: vacancy.description,
+        requirements: vacancy.requirements,
+        location: vacancy.location,
+        remoteAllowed: vacancy.remoteAllowed,
+        seniority: vacancy.seniority,
+        status: vacancy.status,
+        salaryMin: vacancy.salaryMin,
+        salaryMax: vacancy.salaryMax,
+        currency: vacancy.currency,
+      };
+    } catch {
+      return null;
+    }
   },
 };
 

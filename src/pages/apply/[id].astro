@@ -1,0 +1,304 @@
+---
+import "../../styles/styles.css";
+import Layout from "../../layouts/Layout.astro";
+import vacancyService from "../../services/vacancyService";
+import type { Vacancy } from "../../interfaces/vacancy";
+
+const { id } = Astro.params;
+
+if (!id) {
+  return Astro.redirect("/jobs");
+}
+
+let vacancies: Vacancy[] = [];
+
+try {
+  vacancies = await vacancyService.getAll();
+} catch {
+  return Astro.redirect("/jobs");
+}
+
+// Find the vacancy by ID
+const vacancy = vacancies.find((job) => job.id === id);
+
+if (!vacancy) {
+  return Astro.redirect("/jobs");
+}
+
+// Format salary range
+const formatSalary = (min?: number, max?: number, curr?: string) => {
+  if (!min && !max) return null;
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: curr || "USD",
+    maximumFractionDigits: 0,
+  });
+  if (min && max) return `${formatter.format(min)} - ${formatter.format(max)}`;
+  if (min) return `From ${formatter.format(min)}`;
+  if (max) return `Up to ${formatter.format(max)}`;
+  return null;
+};
+
+const salaryDisplay = formatSalary(
+  vacancy.salaryMin,
+  vacancy.salaryMax,
+  vacancy.currency
+);
+const locationDisplay = vacancy.remoteAllowed
+  ? `${vacancy.location} (Remote)`
+  : vacancy.location;
+---
+
+<Layout
+  title={`Apply for ${vacancy.title} - HexaLink`}
+  description={`Apply for the ${vacancy.title} position at HexaLink. ${vacancy.description}`}
+>
+  <main class="apply-page">
+    <div class="apply-page-container">
+      <div class="apply-page-header">
+        <a href="/jobs" class="back-link">← Back to Job Offers</a>
+        <h1>Apply for Position</h1>
+      </div>
+
+      <div class="apply-page-content">
+        <!-- Vacancy Info Card (Left) -->
+        <div class="vacancy-info-card">
+          <h2>{vacancy.title}</h2>
+          <span class={`vacancy-status status-${vacancy.status.toLowerCase()}`}>
+            {vacancy.status}
+          </span>
+
+          <div class="vacancy-details">
+            <div class="vacancy-detail-item">
+              <span class="detail-icon">📍</span>
+              <div class="detail-text">
+                <strong>Location</strong>
+                <p>{locationDisplay}</p>
+              </div>
+            </div>
+
+            <div class="vacancy-detail-item">
+              <span class="detail-icon">💼</span>
+              <div class="detail-text">
+                <strong>Seniority</strong>
+                <p>{vacancy.seniority}</p>
+              </div>
+            </div>
+
+            {
+              salaryDisplay && (
+                <div class="vacancy-detail-item">
+                  <span class="detail-icon">💰</span>
+                  <div class="detail-text">
+                    <strong>Salary Range</strong>
+                    <p>{salaryDisplay}</p>
+                  </div>
+                </div>
+              )
+            }
+          </div>
+
+          <div class="vacancy-description-section">
+            <h3>Description</h3>
+            <p>{vacancy.description}</p>
+          </div>
+
+          {
+            vacancy.requirements && (
+              <div class="vacancy-requirements-section">
+                <h3>Requirements</h3>
+                <p>{vacancy.requirements}</p>
+              </div>
+            )
+          }
+        </div>
+
+        <!-- Application Form (Right) -->
+        <form class="application-form" id="application-form">
+          <h2>Submit Your Application</h2>
+          <div id="form-message" class="form-message"></div>
+
+          <input type="hidden" id="vacancyId" name="vacancyId" value={id} />
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">First Name *</label>
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                required
+                placeholder="John"
+              />
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name *</label>
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                required
+                placeholder="Doe"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              placeholder="john.doe@example.com"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="phoneNumber">Phone Number *</label>
+            <input
+              type="tel"
+              id="phoneNumber"
+              name="phoneNumber"
+              required
+              placeholder="+1234567890"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="resumeUrl">Resume URL *</label>
+            <input
+              type="url"
+              id="resumeUrl"
+              name="resumeUrl"
+              required
+              placeholder="https://example.com/resume.pdf"
+            />
+            <small class="form-hint"
+              >Link to your resume (Google Drive, Dropbox, etc.)</small
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="linkedinUrl">LinkedIn Profile</label>
+            <input
+              type="url"
+              id="linkedinUrl"
+              name="linkedinUrl"
+              placeholder="https://linkedin.com/in/johndoe"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="source">How did you hear about us? *</label>
+            <select id="source" name="source" required>
+              <option value="">Select an option...</option>
+              <option value="LinkedIn">LinkedIn</option>
+              <option value="Indeed">Indeed</option>
+              <option value="Glassdoor">Glassdoor</option>
+              <option value="Referral">Employee Referral</option>
+              <option value="Company Website">Company Website</option>
+              <option value="Social Media">Social Media</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn-primary" id="submit-btn">
+            <span class="btn-text">Submit Application</span>
+            <span class="btn-loading" style="display: none;">Submitting...</span
+            >
+          </button>
+        </form>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  import candidateService from "../../services/candidateService";
+  import type { CandidateRequest } from "../../interfaces/candidate";
+
+  const form = document.getElementById("application-form") as HTMLFormElement;
+  const formMessage = document.getElementById("form-message") as HTMLDivElement;
+  const submitBtn = document.getElementById("submit-btn") as HTMLButtonElement;
+  const btnText = submitBtn.querySelector(".btn-text") as HTMLSpanElement;
+  const btnLoading = submitBtn.querySelector(".btn-loading") as HTMLSpanElement;
+
+  const vacancyIdInput = document.getElementById(
+    "vacancyId"
+  ) as HTMLInputElement;
+  const firstNameInput = document.getElementById(
+    "firstName"
+  ) as HTMLInputElement;
+  const lastNameInput = document.getElementById("lastName") as HTMLInputElement;
+  const emailInput = document.getElementById("email") as HTMLInputElement;
+  const phoneNumberInput = document.getElementById(
+    "phoneNumber"
+  ) as HTMLInputElement;
+  const resumeUrlInput = document.getElementById(
+    "resumeUrl"
+  ) as HTMLInputElement;
+  const linkedinUrlInput = document.getElementById(
+    "linkedinUrl"
+  ) as HTMLInputElement;
+  const sourceInput = document.getElementById("source") as HTMLSelectElement;
+
+  const showMessage = (message: string, isError: boolean = false) => {
+    formMessage.textContent = message;
+    formMessage.className = `form-message ${isError ? "error" : "success"}`;
+    formMessage.style.display = "block";
+  };
+
+  const setLoading = (loading: boolean) => {
+    submitBtn.disabled = loading;
+    btnText.style.display = loading ? "none" : "inline";
+    btnLoading.style.display = loading ? "inline" : "none";
+  };
+
+  form?.addEventListener("submit", async (event: Event) => {
+    event.preventDefault();
+    formMessage.style.display = "none";
+
+    const candidateData: CandidateRequest = {
+      vacancyId: vacancyIdInput.value,
+      firstName: firstNameInput.value.trim(),
+      lastName: lastNameInput.value.trim(),
+      email: emailInput.value.trim(),
+      phoneNumber: phoneNumberInput.value.trim(),
+      resumeUrl: resumeUrlInput.value.trim(),
+      linkedinUrl: linkedinUrlInput.value.trim() || undefined,
+      source: sourceInput.value,
+    };
+
+    // Validate required fields
+    if (
+      !candidateData.firstName ||
+      !candidateData.lastName ||
+      !candidateData.email ||
+      !candidateData.phoneNumber ||
+      !candidateData.resumeUrl ||
+      !candidateData.source
+    ) {
+      showMessage("Please fill in all required fields.", true);
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      await candidateService.apply(candidateData);
+      showMessage(
+        "Your application has been submitted successfully! We will contact you soon."
+      );
+      form.reset();
+    } catch (error) {
+      console.error("Application submission error:", error);
+      showMessage(
+        "There was an error submitting your application. Please try again.",
+        true
+      );
+    } finally {
+      setLoading(false);
+    }
+  });
+</script>

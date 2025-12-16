@@ -27,8 +27,6 @@ const {
   salaryMin,
   salaryMax,
   currency = "USD",
-  buttonText = "Apply Now",
-  buttonHref = "/contact",
 } = Astro.props;
 
 // Format salary range
@@ -88,7 +86,5 @@ const locationDisplay = remoteAllowed ? `${location} (Remote)` : location;
     )
   }
 
-  <a href={`${buttonHref}?vacancy=${id}`} class="btn-primary vacancy-btn"
-    >{buttonText}</a
-  >
+  <a href={`/apply/${id}`} class="btn-primary vacancy-btn">Apply now</a>
 </div>
