@@ -5,8 +5,8 @@ import SolutionCard from "../components/SolutionCard.astro";
 ---
 
 <Layout
-  title="Our Solutions - HexaLink"
-  description="Explore HexaLink's integrated modules for complete human capital management including personnel, recruitment, and analytics."
+  title="Our Solutions - Staffinity"
+  description="Explore Staffinity's integrated modules for complete human capital management including personnel, recruitment, and analytics."
 >
   <main class="solutions-page">
     <div class="solutions-page-container">
@@ -15,52 +15,122 @@ import SolutionCard from "../components/SolutionCard.astro";
         <p>Integrated modules for complete human capital management</p>
       </div>
 
-      <div class="solutions-grid">
-        <SolutionCard
-          icon="👥"
-          title="Personnel Module"
-          description="Manage the entire employee lifecycle from a single place with powerful and easy-to-use tools."
-          features={[
-            "Complete employee and profile management",
-            "Time off requests with approval workflow",
-            "Real-time notification system",
-            "HR reports and analytics",
-          ]}
-        />
-        <SolutionCard
-          icon="🎯"
-          title="Recruitment Module"
-          description="Optimize your selection process with complete candidate and job opening tracking."
-          features={[
-            "Job posting and management",
-            "Candidate database",
-            "Interview and evaluation tracking",
-            "Internal talent search",
-          ]}
-        />
-        <SolutionCard
-          icon="🔗"
-          title="Continuous Integration"
-          description="Microservices architecture enabling seamless communication between all system modules."
-          features={[
-            "Scalable and secure RESTful API",
-            "Automatic data synchronization",
-            "Modular hexagonal architecture",
-            "Continuous deployment (CI/CD)",
-          ]}
-        />
-        <SolutionCard
-          icon="📊"
-          title="Reports & Analytics"
-          description="Make data-driven decisions with interactive dashboards and customizable reports."
-          features={[
-            "Real-time HR KPIs",
-            "Job openings and hiring analysis",
-            "Request and approval metrics",
-            "Multi-format data export",
-          ]}
-        />
+      <!-- Staffinity Product Section -->
+      <div class="product-section">
+        <div class="product-header">
+          <div class="product-badge">Main Product</div>
+          <h2 class="product-title">Staffinity</h2>
+          <p class="product-description">
+            Our comprehensive human capital management platform that brings
+            together all the tools you need to manage your workforce
+            efficiently.
+          </p>
+        </div>
+
+        <div class="solutions-grid">
+          <SolutionCard
+            icon="👥"
+            title="Personnel Module"
+            description="Manage the entire employee lifecycle from a single place with powerful and easy-to-use tools."
+            features={[
+              "Complete employee and profile management",
+              "Time off requests with approval workflow",
+              "Real-time notification system",
+              "HR reports and analytics",
+            ]}
+          />
+          <SolutionCard
+            icon="🎯"
+            title="Recruitment Module"
+            description="Optimize your selection process with complete candidate and job opening tracking."
+            features={[
+              "Job posting and management",
+              "Candidate database",
+              "Interview and evaluation tracking",
+              "Internal talent search",
+            ]}
+          />
+          <SolutionCard
+            icon="🔗"
+            title="Continuous Integration"
+            description="Modern architecture enabling seamless communication between all system modules."
+            features={[
+              "Scalable and secure RESTful API",
+              "Automatic data synchronization",
+              "Modular architecture",
+              "Continuous deployment (CI/CD)",
+            ]}
+          />
+          <SolutionCard
+            icon="📊"
+            title="Reports & Analytics"
+            description="Make data-driven decisions with interactive dashboards and customizable reports."
+            features={[
+              "Real-time HR KPIs",
+              "Job openings and hiring analysis",
+              "Request and approval metrics",
+              "Multi-format data export",
+            ]}
+          />
+        </div>
       </div>
     </div>
   </main>
 </Layout>
+
+<style>
+  .product-section {
+    margin-bottom: 3rem;
+  }
+
+  .product-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .product-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
+    color: white;
+    padding: 0.5rem 1.25rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 1rem;
+  }
+
+  .product-title {
+    font-size: 3rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+  }
+
+  .product-description {
+    color: #718096;
+    font-size: 1.15rem;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* Dark mode support */
+  :global(body.dark-mode) .product-description {
+    color: #cbd5e1;
+  }
+
+  @media (max-width: 768px) {
+    .product-title {
+      font-size: 2.25rem;
+    }
+
+    .product-description {
+      font-size: 1rem;
+    }
+  }
+</style>
