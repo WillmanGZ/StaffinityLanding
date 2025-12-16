@@ -1,4 +1,4 @@
-import type { Candidate, CandidateRequest } from "../interfaces/candidate";
+import type { CandidateRequest } from "../interfaces/candidate";
 import { apiClient } from "../api/base-api";
 
 /**
@@ -8,13 +8,8 @@ export const candidateService = {
   /**
    * Submit a job application
    */
-  async apply(candidateData: CandidateRequest): Promise<Candidate> {
-    const response = await apiClient.post<Candidate>(
-      "/candidates",
-      candidateData
-    );
+  async apply(candidateData: CandidateRequest) {
+    const response = await apiClient.post("/candidates", candidateData);
     return response.data;
   },
 };
-
-export default candidateService;

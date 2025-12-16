@@ -122,7 +122,7 @@ const locationDisplay = vacancy.remoteAllowed
 
           <div class="form-row">
             <div class="form-group">
-              <label for="firstName">First Name *</label>
+              <label for="firstName">First Name</label>
               <input
                 type="text"
                 id="firstName"
@@ -132,7 +132,7 @@ const locationDisplay = vacancy.remoteAllowed
               />
             </div>
             <div class="form-group">
-              <label for="lastName">Last Name *</label>
+              <label for="lastName">Last Name</label>
               <input
                 type="text"
                 id="lastName"
@@ -144,7 +144,7 @@ const locationDisplay = vacancy.remoteAllowed
           </div>
 
           <div class="form-group">
-            <label for="email">Email Address *</label>
+            <label for="email">Email Address</label>
             <input
               type="email"
               id="email"
@@ -155,7 +155,7 @@ const locationDisplay = vacancy.remoteAllowed
           </div>
 
           <div class="form-group">
-            <label for="phoneNumber">Phone Number *</label>
+            <label for="phoneNumber">Phone Number</label>
             <input
               type="tel"
               id="phoneNumber"
@@ -166,7 +166,7 @@ const locationDisplay = vacancy.remoteAllowed
           </div>
 
           <div class="form-group">
-            <label for="resumeUrl">Resume URL *</label>
+            <label for="resumeUrl">Resume URL</label>
             <input
               type="url"
               id="resumeUrl"
@@ -190,7 +190,7 @@ const locationDisplay = vacancy.remoteAllowed
           </div>
 
           <div class="form-group">
-            <label for="source">How did you hear about us? *</label>
+            <label for="source">How did you hear about us?</label>
             <select id="source" name="source" required>
               <option value="">Select an option...</option>
               <option value="LinkedIn">LinkedIn</option>
@@ -215,18 +215,9 @@ const locationDisplay = vacancy.remoteAllowed
 </Layout>
 
 <script>
-  import candidateService from "../../services/candidateService";
-  import type { CandidateRequest } from "../../interfaces/candidate";
+  import { candidateService } from "../../services/candidateService";
 
   const form = document.getElementById("application-form") as HTMLFormElement;
-  const formMessage = document.getElementById("form-message") as HTMLDivElement;
-  const submitBtn = document.getElementById("submit-btn") as HTMLButtonElement;
-  const btnText = submitBtn.querySelector(".btn-text") as HTMLSpanElement;
-  const btnLoading = submitBtn.querySelector(".btn-loading") as HTMLSpanElement;
-
-  const vacancyIdInput = document.getElementById(
-    "vacancyId"
-  ) as HTMLInputElement;
   const firstNameInput = document.getElementById(
     "firstName"
   ) as HTMLInputElement;
@@ -243,62 +234,38 @@ const locationDisplay = vacancy.remoteAllowed
   ) as HTMLInputElement;
   const sourceInput = document.getElementById("source") as HTMLSelectElement;
 
-  const showMessage = (message: string, isError: boolean = false) => {
-    formMessage.textContent = message;
-    formMessage.className = `form-message ${isError ? "error" : "success"}`;
-    formMessage.style.display = "block";
-  };
-
-  const setLoading = (loading: boolean) => {
-    submitBtn.disabled = loading;
-    btnText.style.display = loading ? "none" : "inline";
-    btnLoading.style.display = loading ? "inline" : "none";
-  };
-
   form?.addEventListener("submit", async (event: Event) => {
     event.preventDefault();
-    formMessage.style.display = "none";
 
-    const candidateData: CandidateRequest = {
-      vacancyId: vacancyIdInput.value,
-      firstName: firstNameInput.value.trim(),
-      lastName: lastNameInput.value.trim(),
-      email: emailInput.value.trim(),
-      phoneNumber: phoneNumberInput.value.trim(),
-      resumeUrl: resumeUrlInput.value.trim(),
-      linkedinUrl: linkedinUrlInput.value.trim() || undefined,
-      source: sourceInput.value,
-    };
-
-    // Validate required fields
     if (
-      !candidateData.firstName ||
-      !candidateData.lastName ||
-      !candidateData.email ||
-      !candidateData.phoneNumber ||
-      !candidateData.resumeUrl ||
-      !candidateData.source
+      !firstNameInput.value ||
+      !lastNameInput.value ||
+      !emailInput.value ||
+      !phoneNumberInput.value ||
+      !resumeUrlInput.value ||
+      !sourceInput.value
     ) {
-      showMessage("Please fill in all required fields.", true);
+      alert("Please fill in all fields");
       return;
     }
 
-    setLoading(true);
+    const id = window.location.pathname.split("/").pop();
 
-    try {
-      await candidateService.apply(candidateData);
-      showMessage(
-        "Your application has been submitted successfully! We will contact you soon."
-      );
-      form.reset();
-    } catch (error) {
-      console.error("Application submission error:", error);
-      showMessage(
-        "There was an error submitting your application. Please try again.",
-        true
-      );
-    } finally {
-      setLoading(false);
-    }
+    alert(id);
+
+    candidateService.apply({
+      vacancyId: id!,
+      firstName: firstNameInput.value,
+      lastName: lastNameInput.value,
+      email: emailInput.value,
+      phoneNumber: phoneNumberInput.value,
+      resumeUrl: resumeUrlInput.value,
+      linkedinUrl: linkedinUrlInput.value,
+      source: sourceInput.value,
+      applicationStatus: "APPLIED",
+    });
+
+    alert("Thank you for your application! We will contact you soon");
+    form.reset();
   });
 </script>
