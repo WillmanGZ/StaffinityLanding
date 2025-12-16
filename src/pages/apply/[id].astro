@@ -251,8 +251,6 @@ const locationDisplay = vacancy.remoteAllowed
 
     const id = window.location.pathname.split("/").pop();
 
-    alert(id);
-
     candidateService.apply({
       vacancyId: id!,
       firstName: firstNameInput.value,

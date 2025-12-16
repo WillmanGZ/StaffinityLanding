@@ -1063,6 +1063,19 @@ body.dark-mode .hamburger-line {
 
   .footer-about {
     text-align: center;
+    padding-top: 0;
+  }
+
+  .footer-logo {
+    position: static;
+    display: flex;
+    justify-content: center;
+    margin-bottom: -3rem;
+    margin-top: -3rem;
+  }
+
+  .footer-logo-img {
+    width: 180px;
   }
 
   .social-links {

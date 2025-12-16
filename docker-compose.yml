@@ -1,0 +1,17 @@
+services:
+  landing:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - PUBLIC_API_URL=${PUBLIC_API_URL}
+    ports:
+      - "${PORT:-4321}:4321"
+    environment:
+      - NODE_ENV=production
+      - HOST=0.0.0.0
+      - PORT=4321
+      - PUBLIC_API_URL=${PUBLIC_API_URL}
+    env_file:
+      - .env
+    restart: unless-stopped
